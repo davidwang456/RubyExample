@@ -132,6 +132,44 @@
    sudo yum groupinstall "X Window System"
    ```
 
+### Docker 环境
+1. 构建 Docker 镜像
+   ```bash
+   docker build -t ruby-test-env .
+   ```
+
+2. 运行测试容器
+   ```bash
+   # 基本运行命令
+   docker run -it --rm \
+     -v $(pwd):/app \
+     -e DISPLAY=$DISPLAY \
+     -v /tmp/.X11-unix:/tmp/.X11-unix \
+     ruby-test-env
+
+   # 如果需要指定下载目录
+   docker run -it --rm \
+     -v $(pwd):/app \
+     -v /path/to/downloads:/downloads \
+     -e DISPLAY=$DISPLAY \
+     -v /tmp/.X11-unix:/tmp/.X11-unix \
+     ruby-test-env
+   ```
+
+3. 参数说明：
+   - `-it`: 交互式终端
+   - `--rm`: 容器停止后自动删除
+   - `-v $(pwd):/app`: 挂载当前目录到容器的 /app 目录
+   - `-e DISPLAY=$DISPLAY`: 设置显示环境变量
+   - `-v /tmp/.X11-unix:/tmp/.X11-unix`: 共享 X11 socket
+   - `-v /path/to/downloads:/downloads`: 挂载下载目录（可选）
+
+4. 注意事项：
+   - 确保主机系统已安装 Docker
+   - 确保主机系统已安装 X Window System
+   - 在 Linux 主机上可能需要运行 `xhost +local:` 允许 Docker 访问 X server
+   - Windows 用户需要使用 X Server（如 VcXsrv）并相应调整 DISPLAY 环境变量
+
 ## 使用方法
 
 1. 确保已安装必要的依赖：

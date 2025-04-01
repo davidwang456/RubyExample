@@ -1,7 +1,7 @@
 require 'selenium-webdriver'
 require 'fileutils'
 
-Given('打开浏览器') do
+Given('打开浏览器linux') do
   # 检查 xdotool 是否已安装
   unless system('which xdotool > /dev/null 2>&1')
     raise "xdotool 未安装。请先安装：\n" \
@@ -13,13 +13,13 @@ Given('打开浏览器') do
   @driver = Selenium::WebDriver.for :chrome
 end
 
-Given('访问测试页面') do
+Given('访问测试页面linux') do
   # 使用本地测试页面的完整路径
   test_page_path = File.expand_path('test_page.html', Dir.pwd)
   @driver.get "file://#{test_page_path}"
 end
 
-When('Export file to {word} by click the {word}') do |download_dir, export_button|
+When('linux Export file to {word} by click the {word}') do |download_dir, export_button|
   # 转换路径格式为 Linux 格式
   download_dir = download_dir.gsub('\\', '/')
   # 确保路径以 / 开头
@@ -58,7 +58,7 @@ When('Export file to {word} by click the {word}') do |download_dir, export_butto
   end
 end
 
-Then('文件应该被下载到指定目录') do
+Then('文件应该被下载到指定目录linux') do
   download_dir = '/home/david/Downloads/test'
   # 等待文件下载完成
   sleep(5)
