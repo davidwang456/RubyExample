@@ -57,6 +57,81 @@
 - 硬编码的路径和按钮文本限制了灵活性
 - 固定的等待时间可能导致稳定性问题
 
+## 环境准备
+
+### Windows 环境
+1. 安装 Ruby 环境
+   - 访问 [RubyInstaller for Windows](https://rubyinstaller.org/) 下载并安装 Ruby
+   - 建议安装 Ruby+Devkit 版本，如 Ruby+Devkit 3.2.X (x64)
+   - 安装时请勾选"Add Ruby executables to your PATH"选项
+
+2. 安装必要的依赖
+   ```bash
+   gem install selenium-webdriver
+   gem install cucumber
+   gem install rspec
+   ```
+
+3. 安装 Chrome 浏览器和 ChromeDriver
+   - 下载并安装 [Chrome 浏览器](https://www.google.com/chrome/)
+   - 下载与 Chrome 浏览器版本匹配的 [ChromeDriver](https://sites.google.com/chromium.org/driver/)
+   - 将 ChromeDriver 添加到系统环境变量 PATH 中
+
+### Linux 环境
+1. 安装 Ruby 环境
+   ```bash
+   # Ubuntu/Debian
+   sudo apt update
+   sudo apt install ruby ruby-dev build-essential
+
+   # CentOS/RHEL
+   sudo yum install ruby ruby-devel gcc gcc-c++ make
+   ```
+
+2. 安装必要的依赖
+   ```bash
+   gem install selenium-webdriver
+   gem install cucumber
+   gem install rspec
+   
+   # Ubuntu/Debian
+   sudo apt-get install xdotool
+   
+   # CentOS/RHEL
+   sudo yum install epel-release
+   sudo yum install xdotool
+   ```
+
+3. 安装 Chrome 浏览器和 ChromeDriver
+   ```bash
+   # Ubuntu/Debian
+   wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+   sudo dpkg -i google-chrome-stable_current_amd64.deb
+   sudo apt --fix-broken install
+
+   # CentOS/RHEL
+   sudo dnf install wget
+   wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
+   sudo dnf install ./google-chrome-stable_current_x86_64.rpm
+
+   # 安装 ChromeDriver（适用于所有 Linux 发行版）
+   CHROME_VERSION=$(google-chrome --version | cut -d ' ' -f 3)
+   CHROMEDRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_VERSION%.*}")
+   wget "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip"
+   unzip chromedriver_linux64.zip
+   sudo mv chromedriver /usr/local/bin/
+   sudo chmod +x /usr/local/bin/chromedriver
+   ```
+
+4. 确保 X Window System 已安装
+   ```bash
+   # Ubuntu/Debian
+   sudo apt install xorg
+   
+   # CentOS/RHEL
+   sudo yum groupinstall "X Window System"
+   ```
+
 ## 使用方法
 
 1. 确保已安装必要的依赖：
